@@ -11,6 +11,9 @@ using namespace std;
 #include<gl/glut.h>
 #include <GL/freeglut_ext.h>
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <malloc.h>
 
 struct Vertex;
 struct Vector3D;
@@ -22,7 +25,7 @@ void LiangBarsky(int &x1, int &y1, int &x2, int &y2, int XL, int XR, int YT, int
 
 
 //键盘旋转角度设置
-float xRot = 0.001f;
+float xRot = -30.001f;
 float yRot = 0.001f;
 
 float xRot_c = 0.001f;
@@ -145,14 +148,17 @@ Vector3D Rotation_xy(Vector3D p, float Angle_x, float Angle_y)
 
 
 
-//-----------------------------------------------------纹理映射关系-------------------------------------------------------------\
+//--------------------------------------------------------------纹理映射关系-------------------------------------------------------------
+
+
+//--------------------------------------------------------------定义纹理映射算法---------------------------------------------------------
 //定义纹理空间（u，v）
-color_RGB texture_uv[400][400];
+color_RGB texture_uv[1024][1024];
+
+//--------------------------------------------------------------自定义简单纹理----------------------------------------------------------
 color_RGB color_texture(Vector3D p)
 {
-
-
-	if (p.y <= -0.3)
+	if (p.y <= -0.3 && p.y >= -0.51)
 		return { 1.0f, 1.0f, 1.0f };
 
 	if (p.y <= -0.1)
@@ -164,9 +170,188 @@ color_RGB color_texture(Vector3D p)
 	if (p.y <= 0.3)
 		return { 0.0f, 0.0f, 1.0f };
 
-	if (p.y >= 0.3)
+	if (p.y >= 0.3 && p.y <= 0.51)
 		return { 0.0f, 1.0f, 1.0f };
+}
 
+
+
+//--------------------------------------------------------------BMP图片生成的复杂纹理-------------------------------------------------------------
+typedef unsigned long DWORD;
+typedef int BOOL;
+typedef unsigned char BYTE;
+typedef unsigned short WORD;
+
+typedef struct tagBMP {
+	DWORD biSize;
+	long biWidth;
+	long biHeight;
+	WORD biPlanes;
+	WORD biBitCount;
+	DWORD biCompression;
+	DWORD biSizeImage;
+	long biXPelsPerMeter;
+	long biYPelsPerMeter;
+	DWORD biClrUsed;
+	DWORD biClrImportant;
+}BMP;
+
+int ReadBmp(const char* szFileName);
+int GetDIBColor(int X, int Y, BYTE *r, BYTE *g, BYTE *b);
+BMP bih;
+BYTE buf[512];
+BYTE *Buffer = buf;
+BYTE p;
+long LineByteWidth;
+
+
+BYTE r, g, b;
+
+int ReadBmp(const char* szFileName)
+{
+	FILE *file;
+	WORD bfh[7];
+	long dpixeladd;
+	if (NULL == (file = fopen(szFileName, "rb")))
+	{
+		return 0;
+	}
+	printf("%s\n", szFileName);
+	fread(&bfh, sizeof(WORD), 7, file);
+	if (bfh[0] != (WORD)(((WORD)'B') | ('M' << 8)))
+	{
+		fclose(file);
+		return 0;
+	}
+	fread(&bih, sizeof(BMP), 1, file);
+	if (bih.biBitCount < 24)
+	{
+		fclose(file);
+		return 0;
+	}
+	dpixeladd = bih.biBitCount / 8;
+	LineByteWidth = bih.biWidth * (dpixeladd);
+	if ((LineByteWidth % 4) != 0)
+		LineByteWidth += 4 - (LineByteWidth % 4);
+	if ((Buffer = (BYTE*)malloc(sizeof(BYTE)* LineByteWidth * bih.biHeight)) != NULL)
+	{
+		fread(Buffer, LineByteWidth * bih.biHeight, 1, file);
+		fclose(file);
+		return 1;
+	}
+	fclose(file);
+	return 0;
+}
+int GetDIBColor(int X, int Y, BYTE *red, BYTE *green, BYTE *blue)
+{
+	int dpixeladd;
+	BYTE *ptr;
+	if (X < 0 || X >= 512 || Y < 0 || Y >= 512)
+	{
+		return 0;
+	}
+	dpixeladd = bih.biBitCount / 8;
+	ptr = Buffer + X * dpixeladd + Y * LineByteWidth;
+	*blue = *ptr;
+	*green = *(ptr + 1);
+	*red = *(ptr + 2);
+	return 1;
+}
+
+void texture_init()
+{
+
+	float red;
+	float green;
+	float blue;
+	color_RGB tmp;
+	for (int i = 0; i < 512; i++)
+	{
+		for (int j = 0; j < 512; j++)
+		{
+			if (GetDIBColor(i, j, &r, &g, &b) == 1)
+			{
+				red = r / 255.0;
+				green = g / 255.0;
+				blue = b / 255.0;
+				tmp = { red, green, blue };
+//				cout << tmp.red << "  " << tmp.blue << "  "<<tmp.green << endl;
+				texture_uv[i][j] = tmp;
+			}
+//			else
+//				cout << "Error!!!" << endl;
+		}	
+	}
+
+}
+
+color_RGB color_texture_bmp(Vector3D p)
+{
+	if (p.z < -0.495)
+	{
+		p.x += 0.5;
+		if (p.x > 1) p.x = 1;
+		p.y += 0.5;
+		if (p.y > 1) p.y = 1;
+		int x = abs((int)round(p.x * 511));
+		int y = abs((int)round(p.y * 511));
+		return texture_uv[x][y];
+	}
+
+	if (p.z > 0.495)
+	{
+		p.x += 0.5;
+		if (p.x > 1) p.x = 1;
+		p.y += 0.5;
+		if (p.y > 1) p.y = 1;
+		int x = abs((int)round(p.x * 511));
+		int y = abs((int)round(p.y * 511));
+		return texture_uv[x][y];
+	}
+
+	if (p.x < -0.495)
+	{
+		p.z += 0.5;
+		if (p.z > 1) p.z = 1;
+		p.y += 0.5;
+		if (p.x > 1) p.x = 1;
+		int z = abs((int)round(p.z * 511));
+		int y = abs((int)round(p.y * 511));
+		return texture_uv[z][y];
+	}
+
+	if (p.x > 0.495)
+	{
+		p.z += 0.5;
+		if (p.z > 1) p.z = 1;
+		p.y += 0.5;
+		if (p.y > 1) p.y = 1;
+		int z = abs((int)round(p.z * 511));
+		int y = abs((int)round(p.y * 511));
+		return texture_uv[z][y];
+	}
+
+	if (p.y < -0.495)
+	{
+		p.x += 0.5;
+		if (p.x > 1) p.x = 1;
+		p.z += 0.5;
+		if (p.z > 1) p.z = 1;
+		int x = abs((int)round(p.x * 511));
+		int z = abs((int)round(p.z * 511));
+		return texture_uv[x][z];
+	}
+
+	if (p.y > 0.495)
+	{
+		p.x += 0.5;
+		if (p.x > 1) p.x = 1;
+		p.z += 0.5;
+		if (p.z > 1) p.z = 1;
+		int x = abs((int)round(p.x * 511));
+		int z = abs((int)round(p.z * 511));
+		return texture_uv[x][z];
+	}
 }
 
 
@@ -418,19 +603,14 @@ void Draw_Triangle(float xa, float ya, float xb, float yb, float xc, float yc)
 
 		}
 	}
-
-
-
-
 }
 
 
 //-------------------------------------定义Gouraud光照模式下的光照算法----------------------------------------
 //假设直射光源为白光
 
-
-
 const int n = 100;
+
 color_RGB shador(float ka, float kd[3], float ks, Vector3D L, Vector3D N, Vector3D V)
 {
 	L.normalization();
@@ -447,6 +627,18 @@ color_RGB shador(float ka, float kd[3], float ks, Vector3D L, Vector3D N, Vector
 
 //-----------------------------------------------------------定义深度缓存矩阵(以及透射矫正差值)----------------------------------------
 float zbuffer[800][800];
+
+inline void Z_buffer_init()
+{
+	for (int i = 0; i < 800; i++)
+	{
+		for (int j = 0; j < 800; j++)
+		{
+			zbuffer[i][j] = 10000.0;
+		}
+	}
+}
+
 float depth(Point2D p, const Point2D & p1, const Point2D & p2, const Point2D & p3, float ZA, float ZB, float ZC)
 {
 	float x = p.x;
@@ -577,13 +769,13 @@ void drawSpanLine(int minX, int maxX, int y, const Point2D & p1, const Point2D &
 		t.x = i;
 		c = GetInterpolationColor(t, p1, p2, p3, c1, c2, c3);
 		Vector3D v3 = Point2D_to_Vector3D(t, p1, p2, p3, ZA, ZB, ZC);
-		//		cout << v3.y << endl;
-		color_RGB tc = color_texture(v3);
+//		cout << "原始坐标:" << v3.x << "  " << v3.y << "  " << v3.z << endl;
+		color_RGB tc = color_texture_bmp(v3);
+//		cout << tc.red << "  " << tc.green << "  " << tc.blue << endl;
 		c.red *= tc.red;
 		c.green *= tc.green;
 		c.blue *= tc.blue;
-		//		c = texture_uv[abs(i)][y];
-		//		cout << depth(t, p1, p2, p3, ZA, ZB, ZC) << endl;
+		//	    cout << depth(t, p1, p2, p3, ZA, ZB, ZC) << endl;
 		//		cout << zbuffer[i + 400][y + 400] << endl;
 		if (depth(t, p1, p2, p3, ZA, ZB, ZC) < zbuffer[i + 400][y + 400])
 		{
@@ -796,34 +988,6 @@ void LiangBarsky(int &x1, int &y1, int &x2, int &y2, int XL, int XR, int YT, int
 }
 
 
-//--------------------------------------------------------------定义纹理映射算法---------------------------------------------------------
-void texture_init()
-{
-	for (int i = 0; i < 300; i++)
-	{
-		if ((i % 20) < 10)
-		{
-			for (int j = 0; j < 300; j++)
-			{
-				texture_uv[j][i].red = 1.0f;
-				texture_uv[j][i].green = 0.0f;
-				texture_uv[j][i].blue = 0.0f;
-			}
-		}
-		else
-		{
-			for (int k = 0; k < 300; k++)
-			{
-				texture_uv[k][i].red = 0.0f;
-				texture_uv[k][i].green = 0.0f;
-				texture_uv[k][i].blue = 1.0f;
-			}
-		}
-	}
-}
-
-
-
 
 
 
@@ -848,10 +1012,10 @@ void Triangle_display(Triangle t, float xrot, float yrot, Camera cam, Vector3D l
 	Point2D c_s_2D{ (int)round(c_s.x * 400), (int)round(c_s.y * 400) };
 
 	float ka = 0.6f;
-	float kd_a[3] = { 0.4f, 0.4f, 0.4f };
-	float kd_b[3] = { 0.4f, 0.4f, 0.4f };
-	float kd_c[3] = { 0.4f, 0.4f, 0.4f };
-	float ks = 0.2f;
+	float kd_a[3] = { 0.5f, 0.5f, 0.5f };
+	float kd_b[3] = { 0.5f, 0.5f, 0.5f };
+	float kd_c[3] = { 0.5f, 0.5f, 0.5f };
+	float ks = 0.4f;
 
 	Vector3D L_a(light.x - a.x, light.y - a.y, light.z - a.z);
 	Vector3D L_b(light.x - b.x, light.y - b.y, light.z - b.z);

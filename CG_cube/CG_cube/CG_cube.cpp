@@ -22,7 +22,8 @@ float ydiff = 0.0f;
 float xdiff_c = 0.0f;
 float ydiff_c = 0.0f;
 
-float oldx;//当左键按下时记录鼠标坐标  
+//当鼠标按键按下时记录鼠标坐标
+float oldx;  
 float oldy;
 
 
@@ -83,8 +84,7 @@ void display()
 {
 
 	glClear(GL_COLOR_BUFFER_BIT);
-	//	Sleep(2000);
-	//	glColor3f(1.0f, 1.0f, 1.0f);
+//	glColor3f(1.0f, 1.0f, 1.0f);
 	glPushMatrix();
 
 	cout << xRot << " " << yRot << endl;
@@ -98,11 +98,11 @@ void display()
 	g0 = Rotation_xy(g_0, xRot, yRot);
 	h0 = Rotation_xy(h_0, xRot, yRot);
 
-	//	cout << a0.x << " " << a0.y << " " << a0.z << endl;
-	//	cout << b0.x << " " << b0.y << " " << b0.z << endl;
-	//	cout << c0.x << " " << c0.y << " " << c0.z << endl;
-	//	cout << d0.x << " " << d0.y << " " << d0.z << endl;
-	//	glRotatef(yrot, 0.0f, 1.0f, 0.0f);
+//	cout << a0.x << " " << a0.y << " " << a0.z << endl;
+//	cout << b0.x << " " << b0.y << " " << b0.z << endl;
+//	cout << c0.x << " " << c0.y << " " << c0.z << endl;
+//	cout << d0.x << " " << d0.y << " " << d0.z << endl;
+//	glRotatef(yrot, 0.0f, 1.0f, 0.0f);
 
 	Vector3D a_s = MVP_Transform(a0, cam);
 	Vector3D b_s = MVP_Transform(b0, cam);
@@ -138,11 +138,10 @@ void display()
 	drawTriangle(a_s_2D, e_s_2D, d_s_2D, ca, ce, cd, a_s.z, e_s.z, d_s.z);
 	drawTriangle(h_s_2D, e_s_2D, d_s_2D, ch, ce, cd, h_s.z, e_s.z, d_s.z);
 
-	//	DDALine(a_s.x, a_s.y, ca, b_s.x, b_s.y, cb);
-	//	DDALine(a_s.x, a_s.y, ca, c_s.x, c_s.y, cc);
-	//	DDALine(b_s.x, b_s.y, cb, c_s.x, c_s.y, cc);
+//	DDALine(a_s.x, a_s.y, ca, b_s.x, b_s.y, cb);
+//	DDALine(a_s.x, a_s.y, ca, c_s.x, c_s.y, cc);
+//	DDALine(b_s.x, b_s.y, cb, c_s.x, c_s.y, cc);
 	glEnd();
-
 
 	glPopMatrix();
 
@@ -157,17 +156,11 @@ void display()
 	*/
 
 
-	// 刷新绘图命令
+// 刷新绘图命令
 	glutSwapBuffers();
-	//	glFinish();
+//	glFinish();
 
-	for (int i = 0; i < 800; i++)
-	{
-		for (int j = 0; j < 800; j++)
-		{
-			zbuffer[i][j] = 10000.0;
-		}
-	}
+	Z_buffer_init();
 }
 
 Triangle top1({ 0.5f, 0.5f, 0.5f }, { 0.5f, 0.5f, -0.5f }, { -0.5f, 0.5f, 0.5f });
@@ -189,7 +182,6 @@ void display_new()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glPushMatrix();
-
 
 
 	glPointSize(1.0f);
@@ -216,18 +208,11 @@ void display_new()
 	glutSwapBuffers();
 	glFinish();
 
-	for (int i = 0; i < 800; i++)
-	{
-		for (int j = 0; j < 800; j++)
-		{
-			zbuffer[i][j] = 10000.0;
-		}
-	}
+	Z_buffer_init();
 }
 
 
-
-
+//直线裁剪
 void display_clip()
 {
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -235,20 +220,16 @@ void display_clip()
 	glPushMatrix();
 
 	glBegin(GL_LINES);
-	//	LiangBarsky(200, 200, -200, -200, -240, 240, 240, -240);
-	glEnd();
-
-
-
+//  LiangBarsky(200, 200, -200, -200, -240, 240, 240, -240);
 	glEnd();
 
 	glPopMatrix();
 	glutSwapBuffers();
 	glFinish();
-
 }
 
 
+/*
 //--------------------------------------控制键盘切换视角----------------------------------------------
 void SpecialKeys(int key, int x, int y)
 {
@@ -277,10 +258,11 @@ void SpecialKeys(int key, int x, int y)
 
 		if (yRot < -360.0f)
 			yRot += 360.0f;
-	*/
+	
 	// 刷新窗口
 	glutPostRedisplay();
 }
+*/
 
 
 //--------------------------------------控制鼠标切换视角----------------------------------------------
@@ -361,7 +343,6 @@ void mouseWheel(int button, int dir, int x, int y)
 		// 缩小
 		cam_pos_z -= 0.1;
 	}
-
 	glutPostRedisplay();
 }
 
@@ -370,27 +351,18 @@ void mouseWheel(int button, int dir, int x, int y)
 
 int main(int argc, char *argv[])
 {
-	for (int i = 0; i < 800; i++)
-	{
-		for (int j = 0; j < 800; j++)
-		{
-			zbuffer[i][j] = 10000.0;
-		}
-	}
-	texture_init();
-	//	cout << texture_uv[100][106].red << texture_uv[100][106].green << texture_uv[100][106].blue << endl;
-	//	cout << a_s.x << " " << a_s.y << " " << a_s.z << endl;
-	//	cout << b_s.x << " " << b_s.y << " " << b_s.z << endl;
-	//	cout << c_s.x << " " << c_s.y << " " << c_s.z << endl;
+	Z_buffer_init();
 
-	/*
-		Vector3D test{ 1.0f, 1.0f ,0.0f };
-		test.normalization();
-		cout << test.x << test.y << test.z << endl;
-		cout << ca.red << " " << ca.blue << " " << ca.green << endl;
-		cout << cb.red << " " << cb.blue << " " << cb.green << endl;
-		cout << cc.red << " " << cc.blue << " " << cc.green << endl;
-	*/
+	char szfilename[255] = "d:\\stones.bmp";
+	if (ReadBmp(szfilename) == 0)
+	{
+		printf("failure to read file %s", szfilename);
+	}
+	printf("Width: %ld\n", bih.biWidth);
+	printf("Height: %ld\n", bih.biHeight);
+	printf("BitCount: %d\n\n", (int)bih.biBitCount);
+
+	texture_init();
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
@@ -402,10 +374,9 @@ int main(int argc, char *argv[])
 	glutMotionFunc(mouseMotion);
 	glutMouseWheelFunc(mouseWheel);
 	glutDisplayFunc(display_new);
-	//	glutTimerFunc(5000, timer_function, 1);
 	glutMainLoop();
 
-
+	free(Buffer);
 	return 0;
 
 
