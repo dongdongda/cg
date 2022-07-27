@@ -25,7 +25,7 @@ void LiangBarsky(int &x1, int &y1, int &x2, int &y2, int XL, int XR, int YT, int
 
 
 //键盘旋转角度设置
-float xRot = -30.001f;
+float xRot = -0.001f;
 float yRot = 0.001f;
 
 float xRot_c = 0.001f;
@@ -290,9 +290,11 @@ color_RGB color_texture_bmp(Vector3D p)
 	if (p.z < -0.495)
 	{
 		p.x += 0.5;
-		if (p.x > 1) p.x = 1;
+		if (p.x > 1)  p.x = 1;
+		if (p.x < 0)  p.x = 0;
 		p.y += 0.5;
-		if (p.y > 1) p.y = 1;
+		if (p.y > 1)  p.y = 1;
+		if (p.y < 0)  p.y = 0;
 		int x = abs((int)round(p.x * 511));
 		int y = abs((int)round(p.y * 511));
 		return texture_uv[x][y];
@@ -301,9 +303,11 @@ color_RGB color_texture_bmp(Vector3D p)
 	if (p.z > 0.495)
 	{
 		p.x += 0.5;
-		if (p.x > 1) p.x = 1;
+		if (p.x > 1)  p.x = 1;
+		if (p.x < 0)  p.x = 0;
 		p.y += 0.5;
-		if (p.y > 1) p.y = 1;
+		if (p.y > 1)  p.y = 1;
+		if (p.y < 0)  p.y = 0;
 		int x = abs((int)round(p.x * 511));
 		int y = abs((int)round(p.y * 511));
 		return texture_uv[x][y];
@@ -312,9 +316,11 @@ color_RGB color_texture_bmp(Vector3D p)
 	if (p.x < -0.495)
 	{
 		p.z += 0.5;
-		if (p.z > 1) p.z = 1;
+		if (p.z > 1)  p.z = 1;
+		if (p.z < 0)  p.z = 0;
 		p.y += 0.5;
-		if (p.x > 1) p.x = 1;
+		if (p.y > 1)  p.y = 1;
+		if (p.y < 0)  p.y = 0;
 		int z = abs((int)round(p.z * 511));
 		int y = abs((int)round(p.y * 511));
 		return texture_uv[z][y];
@@ -323,9 +329,11 @@ color_RGB color_texture_bmp(Vector3D p)
 	if (p.x > 0.495)
 	{
 		p.z += 0.5;
-		if (p.z > 1) p.z = 1;
+		if (p.z > 1)  p.z = 1;
+		if (p.z < 0)  p.z = 0;
 		p.y += 0.5;
-		if (p.y > 1) p.y = 1;
+		if (p.y > 1)  p.y = 1;
+		if (p.y < 0)  p.y = 0;
 		int z = abs((int)round(p.z * 511));
 		int y = abs((int)round(p.y * 511));
 		return texture_uv[z][y];
@@ -334,9 +342,11 @@ color_RGB color_texture_bmp(Vector3D p)
 	if (p.y < -0.495)
 	{
 		p.x += 0.5;
-		if (p.x > 1) p.x = 1;
+		if (p.x > 1)  p.x = 1;
+		if (p.x < 0)  p.x = 0;
 		p.z += 0.5;
-		if (p.z > 1) p.z = 1;
+		if (p.z > 1)  p.z = 1;
+		if (p.z < 0)  p.z = 0;
 		int x = abs((int)round(p.x * 511));
 		int z = abs((int)round(p.z * 511));
 		return texture_uv[x][z];
@@ -345,9 +355,11 @@ color_RGB color_texture_bmp(Vector3D p)
 	if (p.y > 0.495)
 	{
 		p.x += 0.5;
-		if (p.x > 1) p.x = 1;
+		if (p.x > 1)  p.x = 1;
+		if (p.x < 0)  p.x = 0;
 		p.z += 0.5;
-		if (p.z > 1) p.z = 1;
+		if (p.z > 1)  p.z = 1;
+		if (p.z < 0)  p.z = 0;
 		int x = abs((int)round(p.x * 511));
 		int z = abs((int)round(p.z * 511));
 		return texture_uv[x][z];
@@ -482,7 +494,7 @@ Vector3D Project_Transform(Vector3D view_coord, float n, float f, float r, float
 }
 
 
-float cam_pos_z = -3.0;
+float cam_pos_z = -5.0;
 float tan_angle = 0.5;
 //使用左手坐标系，初始将摄像机放在（0，0，-3）的位置，正方向为Z正轴，右轴向平行于X正轴，上轴向平行于Y正轴；
 //NDC空间为标准立方体空间，xyz范围均为-1到1；
@@ -507,7 +519,7 @@ Vector3D MVP_Transform(Vector3D p, Camera c)
 //-------------------------------------定义绘制直线的2DDA算法----------------------------------------
 void DDALine(float xa, float ya, color_RGB ca, float xb, float yb, color_RGB cb)
 {
-	int steps = 267;
+	int steps = 300;
 
 	float dx = (xb - xa) / steps;
 	float dy = (yb - ya) / steps;
@@ -683,17 +695,17 @@ void init(void)
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 }
 
-Vector3D pos0(0.0f, 0.0f, cam_pos_z);
+Vector3D pos0(0.0f, 0.0f, -3.0f);
 Vector3D look0(0.0f, 0.0f, 1.0f);
 Vector3D rig0(1.0f, 0.0f, 0.0f);
 Vector3D up0(0.0f, 1.0f, 0.0f);
-Camera cam = { pos0, look0, rig0, up0 };
-void camera_rotate(float xRot_c, float yRot_c)
+Camera Cam0 = { pos0, look0, rig0, up0 };
+Camera camera_rotate(float xRot_c, float yRot_c, Camera cam, float cam_z)
 {
-	pos0.z = cam_pos_z;
-	cam.pos = Rotation_xy(pos0, xRot_c, yRot_c);
+	Vector3D  pos = { 0.0f, 0.0f, cam_z };
+	cam.pos = Rotation_xy(pos, xRot_c, yRot_c);
 	cam.look = { -cam.pos.x, -cam.pos.y, -cam.pos.z };
-	Vector3D r_point0 = { 1.0, 0.0, cam_pos_z };
+	Vector3D r_point0 = { 1.0, 0.0, cam_z };
 	Vector3D r_point = Rotation_xy(r_point0, xRot_c, yRot_c);
 	cam.right = { r_point.x - cam.pos.x, r_point.y - cam.pos.y, r_point.z - cam.pos.z };
 	cam.up = cam.look.Crossproduct(cam.right);
@@ -705,6 +717,7 @@ void camera_rotate(float xRot_c, float yRot_c)
 	//	cout << cam.look.x << "          " << cam.look.y << "          " << cam.look.z << endl;
 	//	cout << cam.right.x << "          " << cam.right.y << "          " << cam.right.z << endl;
 	//	cout << cam.up.x << "          " << cam.up.y << "          " << cam.up.z << endl;
+	return cam;
 }
 
 
@@ -760,8 +773,8 @@ Vector3D Point2D_to_Vector3D(Point2D p, const Point2D & p1, const Point2D & p2, 
 void drawSpanLine(int minX, int maxX, int y, const Point2D & p1, const Point2D & p2, const Point2D & p3, const color_RGB & c1, const color_RGB & c2, const color_RGB & c3, float ZA, float ZB, float ZC)
 {
 	if (minX > maxX)   swap(minX, maxX);
-	//	minX = max(-200, minX);
-	//	maxX = min(200, maxX);
+		minX = max(-360, minX);
+		maxX = min(360, maxX);
 	Point2D t{ minX, y };
 	color_RGB c = c1;
 	for (int i = minX; i <= maxX; ++i)
@@ -793,7 +806,9 @@ void drawSpanLine(int minX, int maxX, int y, const Point2D & p1, const Point2D &
 void drawFlatBottomTriangle(const Point2D& mid, const Point2D & p1, const Point2D & p2, const Point2D & p3, const color_RGB & c1, const color_RGB & c2, const color_RGB & c3, float ZA, float ZB, float ZC)
 {
 	if (p1.y == mid.y)  return;
-	for (int y = p1.y; y >= p2.y; y--)
+	int ymax = min(p1.y, 360 );
+	int ymin = max(p2.y, -360);
+	for (int y = ymax; y >= ymin; y--)
 	{
 		int left_x = p1.x - (int)((p1.y - y)*(p1.x - p2.x) / (p1.y - p2.y));
 		int righ_x = p1.x - (int)((p1.y - y)*(p1.x - mid.x) / (p1.y - mid.y));
@@ -805,7 +820,9 @@ void drawFlatBottomTriangle(const Point2D& mid, const Point2D & p1, const Point2
 void drawFlatTopTriangle(const Point2D& mid, const Point2D & p1, const Point2D & p2, const Point2D & p3, const color_RGB & c1, const color_RGB & c2, const color_RGB & c3, float ZA, float ZB, float ZC)
 {
 	if (p3.y == mid.y)  return;
-	for (int y = p3.y; y <= p2.y; y++)
+	int ymax = min(p2.y, 360);
+	int ymin = max(p3.y, -360);
+	for (int y = ymin; y <= ymax; y++)
 	{
 		int left_x = p3.x - (int)((p3.y - y)*(p3.x - p2.x) / (p3.y - p2.y));
 		int righ_x = p3.x - (int)((p3.y - y)*(p3.x - mid.x) / (p3.y - mid.y));
@@ -992,13 +1009,13 @@ void LiangBarsky(int &x1, int &y1, int &x2, int &y2, int XL, int XR, int YT, int
 
 
 //-----------------------------------------------------光照和纹理叠加渲染-------------------------------------------------------------
-void Triangle_display(Triangle t, float xrot, float yrot, Camera cam, Vector3D light)
+void Triangle_display(Triangle t, float xrot, float yrot, float xrot_c, float yrot_c, float cam_z, Vector3D light)
 {
 	Vector3D a = Rotation_xy(t.a, xrot, yrot);
 	Vector3D b = Rotation_xy(t.b, xrot, yrot);
 	Vector3D c = Rotation_xy(t.c, xrot, yrot);
 
-	camera_rotate(xRot_c, yRot_c);
+	Camera cam = camera_rotate(xrot_c, yrot_c, Cam0, cam_z);
 	//	cout << "摄像机位置" <<cam.pos.x << "  " << cam.pos.y << "  " << cam.pos.z << endl;
 
 	Vector3D a_s = MVP_Transform(a, cam);

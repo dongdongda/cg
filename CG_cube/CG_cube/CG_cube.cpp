@@ -9,7 +9,7 @@ using namespace std;
 #include<math.h>
 #include<gl/glut.h>
 #include <GL/freeglut_ext.h>
-
+#include<GL\freeglut.h>
 
 
 
@@ -79,7 +79,7 @@ color_RGB cd = shador(ka, kd_d, ks, L, N_d, V_d);
 */
 
 
-
+/*
 void display()
 {
 
@@ -145,7 +145,7 @@ void display()
 
 	glPopMatrix();
 
-	/*
+	
 	glPointSize(1.0f);
 	glBegin(GL_POINTS);
 	Draw_Triangle(a_s.x, a_s.y, b_s.x, b_s.y, c_s.x, c_s.y);
@@ -153,7 +153,7 @@ void display()
 	Draw_Triangle(a_s.x, a_s.y, c_s.x, c_s.y, d_s.x, d_s.y);
 	Draw_Triangle(b_s.x, b_s.y, c_s.x, c_s.y, d_s.x, d_s.y);
 	glEnd();
-	*/
+	
 
 
 // 刷新绘图命令
@@ -162,6 +162,8 @@ void display()
 
 	Z_buffer_init();
 }
+*/
+
 
 Triangle top1({ 0.5f, 0.5f, 0.5f }, { 0.5f, 0.5f, -0.5f }, { -0.5f, 0.5f, 0.5f });
 Triangle top2({ -0.5f, 0.5f, -0.5f }, { 0.5f, 0.5f, -0.5f }, { -0.5f, 0.5f, 0.5f });
@@ -178,26 +180,38 @@ Triangle back2({ -0.5f, -0.5f, 0.5f }, { 0.5f, -0.5f, 0.5f }, { -0.5f, 0.5f, 0.5
 
 Vector3D light = { 0.0f, 0.0f, -1.0f };
 
+int frame = 0, time, timebase = 0;
+
 void display_new()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glPushMatrix();
 
+	frame++;
+	time = glutGet(GLUT_ELAPSED_TIME);
+	int fps = 0;
+	if (time - timebase > 1000) {
+		fps = frame * 1000.0 / (time - timebase);
+		cout <<"帧率：" << fps << endl;
+		timebase = time;
+		frame = 0;
+	}
+
 
 	glPointSize(1.0f);
 	glBegin(GL_POINTS);
-	Triangle_display(top1, xRot, yRot, cam, light);
-	Triangle_display(top2, xRot, yRot, cam, light);
-	Triangle_display(bottom1, xRot, yRot, cam, light);
-	Triangle_display(bottom2, xRot, yRot, cam, light);
-	Triangle_display(left1, xRot, yRot, cam, light);
-	Triangle_display(left2, xRot, yRot, cam, light);
-	Triangle_display(right1, xRot, yRot, cam, light);
-	Triangle_display(right2, xRot, yRot, cam, light);
-	Triangle_display(front1, xRot, yRot, cam, light);
-	Triangle_display(front2, xRot, yRot, cam, light);
-	Triangle_display(back1, xRot, yRot, cam, light);
-	Triangle_display(back2, xRot, yRot, cam, light);
+	Triangle_display(top1, xRot, yRot, xRot_c, yRot_c, cam_pos_z, light);
+	Triangle_display(top2, xRot, yRot, xRot_c, yRot_c, cam_pos_z, light);
+	Triangle_display(bottom1, xRot, yRot, xRot_c, yRot_c, cam_pos_z, light);
+	Triangle_display(bottom2, xRot, yRot, xRot_c, yRot_c, cam_pos_z, light);
+	Triangle_display(left1, xRot, yRot, xRot_c, yRot_c, cam_pos_z, light);
+	Triangle_display(left2, xRot, yRot, xRot_c, yRot_c, cam_pos_z, light);
+	Triangle_display(right1, xRot, yRot, xRot_c, yRot_c, cam_pos_z, light);
+	Triangle_display(right2, xRot, yRot, xRot_c, yRot_c, cam_pos_z, light);
+	Triangle_display(front1, xRot, yRot, xRot_c, yRot_c, cam_pos_z, light);
+	Triangle_display(front2, xRot, yRot, xRot_c, yRot_c, cam_pos_z, light);
+	Triangle_display(back1, xRot, yRot, xRot_c, yRot_c, cam_pos_z, light);
+	Triangle_display(back2, xRot, yRot, xRot_c, yRot_c, cam_pos_z, light);
 	glEnd();
 
 
@@ -305,7 +319,7 @@ void mouseMotion(int x, int y) {
 		if (yRot < -360.0f)
 			yRot += 360.0f;
 
-		std::cout << "yRot:" << yRot << "\txRot" << xRot << std::endl;
+//		std::cout << "yRot:" << yRot << "\txRot" << xRot << std::endl;
 		glutPostRedisplay();
 	}
 
@@ -325,7 +339,7 @@ void mouseMotion(int x, int y) {
 		if (yRot_c < -360.0f)
 			yRot_c += 360.0f;
 
-		std::cout << "yRot_c:" << yRot << "\txRot_c" << xRot << std::endl;
+//		std::cout << "yRot_c:" << yRot_c << "\txRot_c" << xRot_c << std::endl;
 		glutPostRedisplay();
 	}
 }
@@ -336,13 +350,16 @@ void mouseWheel(int button, int dir, int x, int y)
 	if (dir > 0)
 	{
 		// 放大
+		if(cam_pos_z < -1.59)
 		cam_pos_z += 0.1;
 	}
 	else
 	{
 		// 缩小
+		if (cam_pos_z > -9.99)
 		cam_pos_z -= 0.1;
 	}
+//	std::cout << "摄像机Z轴坐标:" << cam_pos_z << std::endl;
 	glutPostRedisplay();
 }
 

@@ -1,1 +1,53 @@
-﻿  CG_cube.vcxproj -> D:\vs_codework\cg\CG_cube\Debug\CG_cube.exe
+﻿  CG_cube.cpp
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(122): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(133): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(215): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\stdio.h(208): note: 参见“fopen”的声明
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(274): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(275): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(276): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(507): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(600): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(601): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(602): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(603): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(604): warning C4305: “初始化”: 从“double”到“float”截断
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(609): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(610): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(656): warning C4244: “初始化”: 从“int”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(657): warning C4244: “初始化”: 从“int”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(670): warning C4244: “初始化”: 从“int”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(671): warning C4244: “初始化”: 从“int”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(730): warning C4244: “初始化”: 从“int”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(731): warning C4244: “初始化”: 从“int”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(747): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(748): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(752): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(753): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(798): warning C4244: “参数”: 从“double”转换到“GLfloat”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(942): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(944): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(946): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(947): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(948): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(949): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(987): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(988): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(989): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(990): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(1000): warning C4244: “参数”: 从“double”转换到“GLfloat”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(1001): warning C4244: “参数”: 从“double”转换到“GLfloat”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\cg_cube.cpp(194): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\cg_cube.cpp(288): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\cg_cube.cpp(289): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\cg_cube.cpp(293): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\cg_cube.cpp(294): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\cg_cube.cpp(307): warning C4244: “-=”: 从“double”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\cg_cube.cpp(308): warning C4244: “-=”: 从“double”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\cg_cube.cpp(327): warning C4244: “-=”: 从“double”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\cg_cube.cpp(328): warning C4244: “-=”: 从“double”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\cg_cube.cpp(354): warning C4305: “+=”: 从“double”到“float”截断
+d:\vs_codework\cg\cg_cube\cg_cube\cg_cube.cpp(360): warning C4305: “-=”: 从“double”到“float”截断
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(175): warning C4715: “color_texture”: 不是所有的控件路径都返回值
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(367): warning C4715: “color_texture_bmp”: 不是所有的控件路径都返回值
+  CG_cube.vcxproj -> D:\vs_codework\cg\CG_cube\Debug\CG_cube.exe
