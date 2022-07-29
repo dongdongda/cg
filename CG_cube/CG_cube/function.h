@@ -494,7 +494,7 @@ Vector3D Project_Transform(Vector3D view_coord, float n, float f, float r, float
 }
 
 
-float cam_pos_z = -5.0;
+float cam_pos_z = -10.0;
 float tan_angle = 0.5;
 //使用左手坐标系，初始将摄像机放在（0，0，-3）的位置，正方向为Z正轴，右轴向平行于X正轴，上轴向平行于Y正轴；
 //NDC空间为标准立方体空间，xyz范围均为-1到1；
@@ -692,7 +692,7 @@ GLfloat ywcMin = -400.0, ywcMax = 400.0;
 void init(void)
 {
 	//设置显示窗口的背景颜色为黑色
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
 Vector3D pos0(0.0f, 0.0f, -3.0f);
@@ -777,7 +777,7 @@ void drawSpanLine(int minX, int maxX, int y, const Point2D & p1, const Point2D &
 		maxX = min(360, maxX);
 	Point2D t{ minX, y };
 	color_RGB c = c1;
-	for (int i = minX; i <= maxX; ++i)
+	for (int i = minX; i <= maxX + 1; ++i)
 	{
 		t.x = i;
 		c = GetInterpolationColor(t, p1, p2, p3, c1, c2, c3);
@@ -1061,4 +1061,91 @@ void Triangle_display(Triangle t, float xrot, float yrot, float xrot_c, float yr
 
 	return;
 
+}
+
+
+
+//-----------------------------------------------------Shadow map阴影算法实现-------------------------------------------------------------
+float zbuffer_light[800][800];
+
+inline void zbuffer_light_init()
+{
+	for (int i = 0; i < 800; i++)
+	{
+		for (int j = 0; j < 800; j++)
+		{
+			zbuffer_light[i][j] = 10000.0;
+		}
+	}
+}
+
+float width_floor = 720;
+float height_floor = 720;
+
+color_RGB shadow_color = { 0.0f, 0.0f, 0.0f };
+
+Vector3D floor_a = { 1.0, 1.0f, 3.0f };
+Vector3D floor_b = { -1.0, -1.0f, 3.0f };
+Vector3D floor_c = { -1.0, 1.0f, 3.0f };
+Vector3D floor_d = { 1.0, -1.0f, 3.0f };
+
+
+Vector3D light = { 0.0f, 0.0f, -10.0f };
+
+
+bool light_shield(int x, int y)
+{
+	Camera cam = Cam0;
+	cam.pos = light;
+
+	Vector3D shadow_tmp;
+	float depth_tmp;
+
+	shadow_tmp = { float(x / 400.0), float(y / 400.0), 1.0 };
+	shadow_tmp = MVP_Transform(shadow_tmp, cam);
+	x = (int)round(shadow_tmp.x * 400);
+	y = (int)round(shadow_tmp.y * 400);
+//	cout << shadow_tmp.z << "   " << x <<"   "<< y << "   " << zbuffer_light[x + 400][y + 400] << endl;
+	if (shadow_tmp.z > zbuffer_light[x + 400][y + 400])
+		return true;
+    else
+		return false;
+	
+
+}
+
+
+
+void shadow(float xrot_c, float yrot_c, float cam_z)
+{ 
+	
+	Camera cam = camera_rotate(xrot_c, yrot_c, Cam0, cam_z);
+
+	Vector3D shadow_tmp;
+	float depth_tmp;
+
+	glPointSize(1.0f);
+	glBegin(GL_POINTS);
+	for (int i = -360; i <= 360; i++)
+	{
+		for (int j = -360; j <= 360; j++)
+		{
+			shadow_tmp = { float(i / 400.0), float(j / 400.0), 1.0 };
+			shadow_tmp = MVP_Transform(shadow_tmp, cam);
+			int x = (int)round(shadow_tmp.x * 400);
+			int y = (int)round(shadow_tmp.y * 400);
+	//		cout << shadow_tmp.z << "   " << x <<"   "<< y << "   " << zbuffer[x + 400][y + 400] << endl;
+			if (shadow_tmp.z < zbuffer[x + 400][y + 400])
+			{
+				if (light_shield(i, j) == true)
+				{
+//					cout << i << "  " << j << " " << "shadow! " << endl;
+				
+					glColor3f(0.0, 0.0, 0.0);
+					glVertex3f(i / 400.0, j / 400.0, 0);
+				}
+			}
+		}
+	}
+	glEnd();
 }

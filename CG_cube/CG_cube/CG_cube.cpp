@@ -178,7 +178,7 @@ Triangle front2({ -0.5f, -0.5f, -0.5f }, { 0.5f, -0.5f, -0.5f }, { -0.5f, 0.5f, 
 Triangle back1({ 0.5f, 0.5f, 0.5f }, { 0.5f, -0.5f, 0.5f }, { -0.5f, 0.5f, 0.5f });
 Triangle back2({ -0.5f, -0.5f, 0.5f }, { 0.5f, -0.5f, 0.5f }, { -0.5f, 0.5f, 0.5f });
 
-Vector3D light = { 0.0f, 0.0f, -1.0f };
+
 
 int frame = 0, time, timebase = 0;
 
@@ -212,6 +212,19 @@ void display_new()
 	Triangle_display(front2, xRot, yRot, xRot_c, yRot_c, cam_pos_z, light);
 	Triangle_display(back1, xRot, yRot, xRot_c, yRot_c, cam_pos_z, light);
 	Triangle_display(back2, xRot, yRot, xRot_c, yRot_c, cam_pos_z, light);
+
+
+	if (cam_pos_z == -10.0 && xRot_c == 0.001f && yRot_c == 0.001f)
+	{
+		for (int i = 0; i < 800; i++)
+		{
+			for (int j = 0; j < 800; j++)
+			{
+				zbuffer_light[i][j] = zbuffer[i][j];
+			}
+		}
+	}
+	shadow(xRot_c, yRot_c, cam_pos_z);
 	glEnd();
 
 
