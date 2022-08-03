@@ -20,7 +20,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\RenderHelp\sample_05_model.cpp">
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\RenderHelp\main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

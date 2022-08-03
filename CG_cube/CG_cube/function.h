@@ -15,7 +15,9 @@ using namespace std;
 #include <stdlib.h>
 #include <malloc.h>
 
-struct Vertex;
+
+struct color_RGB;
+struct Point2D;
 struct Vector3D;
 struct Camera;
 class Triangle;
@@ -31,7 +33,7 @@ float yRot = 0.001f;
 float xRot_c = 0.001f;
 float yRot_c = 0.001f;
 
-//-------------------------------------定义RGB颜色数据格式----------------------------------------
+//定义RGB颜色数据格式
 struct color_RGB
 {
 	float red;
@@ -39,7 +41,12 @@ struct color_RGB
 	float blue;
 };
 
-
+//定义二维坐标
+struct Point2D {
+	int x;
+	int y;
+	Point2D(int a, int b) :x(a), y(b) { }
+};
 
 //定义三维向量
 struct Vector3D
@@ -447,9 +454,15 @@ struct Camera
 
 //------------------------------------------------------------------MVP矩阵坐标变换------------------------------------------------------------------------
 //世界坐标变换(World Transform)
-Vector3D World_Transform(Vector3D model_coord, matrix_4x4 t)
+float scale = 1.0;
+Vector3D World_Transform_scale(Vector3D model_coord, float s)
 {
-	return vector_matrix(model_coord, t);
+	Vector3D res;
+	res.x = model_coord.x * s;
+	res.y = model_coord.y * s;
+	res.z = model_coord.z * s;
+	return res;
+
 }
 
 
@@ -473,10 +486,10 @@ Vector3D View_Transform(Vector3D world_coord, Camera c)
 Vector3D Project_Transform(Vector3D view_coord, float n, float f, float tan_angle, float Aspect)
 {
 	matrix_4x4 t{
-				   {  {(1 / tan_angle) / Aspect,         0,                       0,                 0              },
-					  {0,                                 1 / tan_angle,          0,                 0              },
-					  {0,                                 0,                      -f / (n - f),     f * n / (n - f) },
-					  {0,                                 0,                      1,                 0              }  }
+				   {  {(1 / tan_angle) / Aspect,          0,                      0,                  0               },
+					  {0,                                 1 / tan_angle,          0,                  0               },
+					  {0,                                 0,                      -f / (n - f),       f * n / (n - f) },
+					  {0,                                 0,                      1,                  0               }  }
 	};
 	return vector_matrix(view_coord, t);
 }
@@ -487,21 +500,22 @@ Vector3D Project_Transform(Vector3D view_coord, float n, float f, float r, float
 	matrix_4x4 mat{
 				   {  {(2 * n) / (r - l),         0,                    -(r + l) / (r - l),          0                     },
 					  {0,                         (2 * n) / (t - b),    -(t + b) / (t - b),          0                     },
-					  {0,                         0,                    (f + n) / (f - n),          (2 * f * n) / (n - f) },
-					  {0,                         0,                    1,                          0                     }  }
+					  {0,                         0,                    (f + n) / (f - n),           (2 * f * n) / (n - f) },
+					  {0,                         0,                    1,                           0                     }  }
 	};
 	return vector_matrix(view_coord, mat);
 }
 
 
-float cam_pos_z = -10.0;
+float cam_pos_z = -3.0;
 float tan_angle = 0.5;
 //使用左手坐标系，初始将摄像机放在（0，0，-3）的位置，正方向为Z正轴，右轴向平行于X正轴，上轴向平行于Y正轴；
 //NDC空间为标准立方体空间，xyz范围均为-1到1；
 //世界坐标系下某点经过MVP变换后的坐标为：
-Vector3D MVP_Transform(Vector3D p, Camera c)
+Vector3D MVP_Transform( Vector3D p, Camera c)
 {
-	Vector3D v = View_Transform(p, c);
+	Vector3D w = World_Transform_scale(p, scale);
+	Vector3D v = View_Transform(w, c);
 	//	return Project_Transform(v, 2.0, 4.0, 1.0, -1.0, 1.0, -1.0);
 	//	cout << "摄像机位置：" << cam_pos_z << endl;
 	return Project_Transform(v, -1.0 - cam_pos_z, 1.0 - cam_pos_z, 0.5, 1.0);
@@ -515,7 +529,7 @@ Vector3D MVP_Transform(Vector3D p, Camera c)
 
 
 
-
+/*
 //-------------------------------------定义绘制直线的2DDA算法----------------------------------------
 void DDALine(float xa, float ya, color_RGB ca, float xb, float yb, color_RGB cb)
 {
@@ -548,15 +562,7 @@ void DDALine(float xa, float ya, color_RGB ca, float xb, float yb, color_RGB cb)
 
 }
 
-
-
 //--------------------------------------------------绘制三角形（通过叉积判断点是否在三角形内）-----------------------------------------------------------
-struct Point2D {
-	int x;
-	int y;
-	Point2D(int a, int b) :x(a), y(b) { }
-};
-
 int cross(const Point2D &a, const Point2D &b, const Point2D &p)
 {
 	return (b.x - a.x)*(p.y - a.y) - (b.y - a.y)*(p.x - a.x);
@@ -616,6 +622,8 @@ void Draw_Triangle(float xa, float ya, float xb, float yb, float xc, float yc)
 		}
 	}
 }
+*/
+
 
 
 //-------------------------------------定义Gouraud光照模式下的光照算法----------------------------------------
@@ -691,8 +699,8 @@ GLfloat ywcMin = -400.0, ywcMax = 400.0;
 //背景颜色设置
 void init(void)
 {
-	//设置显示窗口的背景颜色为黑色
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+	//设置显示窗口的背景颜色为白色
+	glClearColor(124.0 / 255.0, 252.0 / 255.0, 0.0f, 1.0f);
 }
 
 Vector3D pos0(0.0f, 0.0f, -3.0f);
@@ -702,7 +710,7 @@ Vector3D up0(0.0f, 1.0f, 0.0f);
 Camera Cam0 = { pos0, look0, rig0, up0 };
 Camera camera_rotate(float xRot_c, float yRot_c, Camera cam, float cam_z)
 {
-	Vector3D  pos = { 0.0f, 0.0f, cam_z };
+	Vector3D  pos = pos0;
 	cam.pos = Rotation_xy(pos, xRot_c, yRot_c);
 	cam.look = { -cam.pos.x, -cam.pos.y, -cam.pos.z };
 	Vector3D r_point0 = { 1.0, 0.0, cam_z };
@@ -765,6 +773,7 @@ Vector3D Point2D_to_Vector3D(Point2D p, const Point2D & p1, const Point2D & p2, 
 
 	res = Rotation_y(res, -yRot);
 	res = Rotation_x(res, -xRot);
+	res = World_Transform_scale(res, (1 / scale));
 	return res;
 
 }
@@ -883,6 +892,8 @@ void  drawTriangle(const Point2D & p1, const Point2D & p2, const Point2D & p3, c
 }
 
 
+
+/*
 //--------------------------------------------------------------定义Liang-Barsky直线裁剪算法---------------------------------------------------------
 void LiangBarsky(int &x1, int &y1, int &x2, int &y2, int XL, int XR, int YT, int YB)
 {
@@ -1003,8 +1014,20 @@ void LiangBarsky(int &x1, int &y1, int &x2, int &y2, int XL, int XR, int YT, int
 
 	return;
 }
-
-
+*/
+//------------------------定义一个立方体-----------------------------
+Triangle top1({ 0.5f, 0.5f, 0.5f }, { 0.5f, 0.5f, -0.5f }, { -0.5f, 0.5f, 0.5f });
+Triangle top2({ -0.5f, 0.5f, -0.5f }, { 0.5f, 0.5f, -0.5f }, { -0.5f, 0.5f, 0.5f });
+Triangle bottom1({ 0.5f, -0.5f, 0.5f }, { 0.5f, -0.5f, -0.5f }, { -0.5f, -0.5f, 0.5f });
+Triangle bottom2({ -0.5f, -0.5f, -0.5f }, { 0.5f, -0.5f, -0.5f }, { -0.5f, -0.5f, 0.5f });
+Triangle left1({ -0.5f, 0.5f, 0.5f }, { -0.5f, 0.5f, -0.5f }, { -0.5f, -0.5f, 0.5f });
+Triangle left2({ -0.5f, -0.5f, -0.5f }, { -0.5f, 0.5f, -0.5f }, { -0.5f, -0.5f, 0.5f });
+Triangle right1({ 0.5f, 0.5f, 0.5f }, { 0.5f, 0.5f, -0.5f }, { 0.5f, -0.5f, 0.5f });
+Triangle right2({ 0.5f, -0.5f, -0.5f }, { 0.5f, 0.5f, -0.5f }, { 0.5f, -0.5f, 0.5f });
+Triangle front1({ 0.5f, 0.5f, -0.5f }, { 0.5f, -0.5f, -0.5f }, { -0.5f, 0.5f, -0.5f });
+Triangle front2({ -0.5f, -0.5f, -0.5f }, { 0.5f, -0.5f, -0.5f }, { -0.5f, 0.5f, -0.5f });
+Triangle back1({ 0.5f, 0.5f, 0.5f }, { 0.5f, -0.5f, 0.5f }, { -0.5f, 0.5f, 0.5f });
+Triangle back2({ -0.5f, -0.5f, 0.5f }, { 0.5f, -0.5f, 0.5f }, { -0.5f, 0.5f, 0.5f });
 
 
 
@@ -1027,6 +1050,7 @@ void Triangle_display(Triangle t, float xrot, float yrot, float xrot_c, float yr
 	Point2D a_s_2D{ (int)round(a_s.x * 400), (int)round(a_s.y * 400) };
 	Point2D b_s_2D{ (int)round(b_s.x * 400), (int)round(b_s.y * 400) };
 	Point2D c_s_2D{ (int)round(c_s.x * 400), (int)round(c_s.y * 400) };
+
 
 	float ka = 0.6f;
 	float kd_a[3] = { 0.5f, 0.5f, 0.5f };
@@ -1068,6 +1092,16 @@ void Triangle_display(Triangle t, float xrot, float yrot, float xrot_c, float yr
 //-----------------------------------------------------Shadow map阴影算法实现-------------------------------------------------------------
 float zbuffer_light[800][800];
 
+color_RGB shadow_color = { 0.0f, 0.0f, 0.0f };
+
+Vector3D floor_a = { 1.0, 1.0f, 1.0f };
+Vector3D floor_b = { -1.0, -1.0f, 1.0f };
+Vector3D floor_c = { -1.0, 1.0f, 1.0f };
+Vector3D floor_d = { 1.0, -1.0f, 1.0f };
+
+
+Vector3D light = { 0.0f, 0.0f, -6.0f };
+
 inline void zbuffer_light_init()
 {
 	for (int i = 0; i < 800; i++)
@@ -1079,18 +1113,121 @@ inline void zbuffer_light_init()
 	}
 }
 
-float width_floor = 720;
-float height_floor = 720;
+void zbuffer_light_count(Triangle t, float xrot, float yrot, Vector3D light)
+{
+	Vector3D a = Rotation_xy(t.a, xrot, yrot);
+	Vector3D b = Rotation_xy(t.b, xrot, yrot);
+	Vector3D c = Rotation_xy(t.c, xrot, yrot);
+	
+	Camera cam;
+	cam.pos = light;
+	cam.look = look0;
+	cam.right = rig0;
+	cam.up = up0;
 
-color_RGB shadow_color = { 0.0f, 0.0f, 0.0f };
+	Vector3D a_s = MVP_Transform(a, cam);
+	Vector3D b_s = MVP_Transform(b, cam);
+	Vector3D c_s = MVP_Transform(c, cam);
 
-Vector3D floor_a = { 1.0, 1.0f, 3.0f };
-Vector3D floor_b = { -1.0, -1.0f, 3.0f };
-Vector3D floor_c = { -1.0, 1.0f, 3.0f };
-Vector3D floor_d = { 1.0, -1.0f, 3.0f };
+	Point2D a_s_2D{ (int)round(a_s.x * 400), (int)round(a_s.y * 400) };
+	Point2D b_s_2D{ (int)round(b_s.x * 400), (int)round(b_s.y * 400) };
+	Point2D c_s_2D{ (int)round(c_s.x * 400), (int)round(c_s.y * 400) };
+	
+	float ZA = a_s.z;
+	float ZB = b_s.z;
+	float ZC = c_s.z;
+
+	Point2D p[3] = { a_s_2D, b_s_2D, c_s_2D };
+
+	if (p[1].y > p[0].y)
+	{
+		swap(p[0], p[1]);
+		swap(ZA, ZB);
+	}
+	if (p[2].y > p[0].y)
+	{
+		swap(p[0], p[2]);
+		swap(ZA, ZC);
+	}
+	if (p[1].y < p[2].y)
+	{
+		swap(p[1], p[2]);
+		swap(ZB, ZC);
+	}
+
+	
+
+	if (p[0].y == p[2].y)
+		return;
+
+	int px = (int)roundf(float(p[1].y - p[0].y) / (p[2].y - p[0].y) * (p[2].x - p[0].x) + p[0].x);
+	
+	Point2D mid(px, p[1].y);
+	
+	if (p[0].y > mid.y)
+	{
+		int ymax = min(p[0].y, 360);
+		int ymin = max(p[1].y, -360);
+		for (int y = ymax; y >= ymin; y--)
+		{
+			int left_x = p[0].x - (int)((p[0].y - y)*(p[0].x - p[1].x) / (p[0].y - p[1].y));
+			int righ_x = p[0].x - (int)((p[0].y - y)*(p[0].x - mid.x) / (p[0].y - mid.y));
+
+			if (left_x > righ_x)   swap(left_x, righ_x);
+			Point2D t{ left_x, y };
+			
+			for (int i = left_x; i <= righ_x + 1; ++i)
+			{
+				t.x = i;
+				if (depth(t, p[0], p[1], p[2], ZA, ZB, ZC) < zbuffer_light[i + 400][y + 400])
+				{
+					zbuffer_light[i + 400][y + 400] = depth(t, p[0], p[1], p[2], ZA, ZB, ZC);
+				}
+			}
+		}
+	}
+	
+
+	if (p[2].y < mid.y)
+	{
+		int ymax = min(p[1].y, 360);
+		int ymin = max(p[2].y, -360);
+		for (int y = ymax; y >= ymin; y--)
+		{
+			int left_x = p[2].x - (int)((p[2].y - y)*(p[2].x - p[1].x) / (p[2].y - p[1].y));
+			int righ_x = p[2].x - (int)((p[2].y - y)*(p[2].x - mid.x) / (p[2].y - mid.y));
+
+			if (left_x > righ_x)   swap(left_x, righ_x);
+			Point2D t{ left_x, y };
+			for (int i = left_x; i <= righ_x + 1; ++i)
+			{
+				t.x = i;
+				if (depth(t, p[0], p[1], p[2], ZA, ZB, ZC) < zbuffer_light[i + 400][y + 400])
+				{
+					zbuffer_light[i + 400][y + 400] = depth(t, p[0], p[1], p[2], ZA, ZB, ZC);
+				}
+			}
+		}
+	}
+}
+
+void zbuffer_light_update(Vector3D light, float xrot, float yrot)
+{
+	zbuffer_light_count(top1, xrot, yrot, light);
+	zbuffer_light_count(top2, xrot, yrot, light);
+	zbuffer_light_count(bottom1, xrot, yrot, light);
+	zbuffer_light_count(bottom2, xrot, yrot, light);
+	zbuffer_light_count(left1, xrot, yrot, light);
+	zbuffer_light_count(left2, xrot, yrot, light);
+	zbuffer_light_count(right1, xrot, yrot, light);
+	zbuffer_light_count(right2, xrot, yrot, light);
+	zbuffer_light_count(front1, xrot, yrot, light);
+	zbuffer_light_count(front2, xrot, yrot, light);
+	zbuffer_light_count(back1, xrot, yrot, light);
+	zbuffer_light_count(front2, xrot, yrot, light);
+}
 
 
-Vector3D light = { 0.0f, 0.0f, -10.0f };
 
 
 bool light_shield(int x, int y)
@@ -1106,7 +1243,7 @@ bool light_shield(int x, int y)
 	x = (int)round(shadow_tmp.x * 400);
 	y = (int)round(shadow_tmp.y * 400);
 //	cout << shadow_tmp.z << "   " << x <<"   "<< y << "   " << zbuffer_light[x + 400][y + 400] << endl;
-	if (shadow_tmp.z > zbuffer_light[x + 400][y + 400])
+	if (zbuffer_light[x + 400][y + 400] != 10000)
 		return true;
     else
 		return false;
@@ -1126,23 +1263,20 @@ void shadow(float xrot_c, float yrot_c, float cam_z)
 
 	glPointSize(1.0f);
 	glBegin(GL_POINTS);
-	for (int i = -360; i <= 360; i++)
+	for (int i = -400; i <= 400; i++)
 	{
-		for (int j = -360; j <= 360; j++)
+		for (int j = -400; j <= 400; j++)
 		{
 			shadow_tmp = { float(i / 400.0), float(j / 400.0), 1.0 };
 			shadow_tmp = MVP_Transform(shadow_tmp, cam);
 			int x = (int)round(shadow_tmp.x * 400);
 			int y = (int)round(shadow_tmp.y * 400);
-	//		cout << shadow_tmp.z << "   " << x <<"   "<< y << "   " << zbuffer[x + 400][y + 400] << endl;
-			if (shadow_tmp.z < zbuffer[x + 400][y + 400])
+			if (zbuffer[x + 400][y + 400] == 10000)
 			{
 				if (light_shield(i, j) == true)
-				{
-//					cout << i << "  " << j << " " << "shadow! " << endl;
-				
-					glColor3f(0.0, 0.0, 0.0);
-					glVertex3f(i / 400.0, j / 400.0, 0);
+				{		
+					glColor3f(0.2, 0.2, 0.2);
+					glVertex3f(x / 400.0, y / 400.0, 0);
 				}
 			}
 		}

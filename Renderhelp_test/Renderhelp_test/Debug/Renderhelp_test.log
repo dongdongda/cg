@@ -1,5 +1,5 @@
-﻿  sample_05_model.cpp
-d:\vs_codework\renderhelp\sample_05_model.cpp : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+﻿  main.cpp
+d:\vs_codework\renderhelp\main.cpp : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
 d:\vs_codework\renderhelp\renderhelp.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
 d:\vs_codework\renderhelp\renderhelp.h(921): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
 d:\vs_codework\renderhelp\renderhelp.h(953): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
@@ -12,15 +12,20 @@ d:\vs_codework\renderhelp\renderhelp.h(1326): warning C4244: “初始化”: �
               T=int
           ]
 d:\vs_codework\renderhelp\model.h : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
-d:\vs_codework\renderhelp\sample_05_model.cpp(12): warning C4305: “参数”: 从“double”到“T”截断
+d:\vs_codework\renderhelp\main.cpp(15): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
+d:\vs_codework\renderhelp\main.cpp(31): warning C4305: “参数”: 从“double”到“T”截断
           with
           [
               T=float
           ]
-d:\vs_codework\renderhelp\sample_05_model.cpp(15): warning C4305: “参数”: 从“double”到“T”截断
+d:\vs_codework\renderhelp\main.cpp(34): warning C4305: “参数”: 从“double”到“T”截断
           with
           [
               T=float
           ]
-d:\vs_codework\renderhelp\sample_05_model.cpp(46): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+d:\vs_codework\renderhelp\main.cpp(65): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+d:\vs_codework\renderhelp\main.cpp(85): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\stdio.h(208): note: 参见“fopen”的声明
+d:\vs_codework\renderhelp\main.cpp(128): warning C4305: “*=”: 从“double”到“float”截断
+d:\vs_codework\renderhelp\main.cpp(134): warning C4305: “/=”: 从“double”到“float”截断
   Renderhelp_test.vcxproj -> D:\vs_codework\cg\Renderhelp_test\Debug\Renderhelp_test.exe
