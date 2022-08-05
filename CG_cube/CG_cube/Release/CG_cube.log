@@ -1,42 +1,53 @@
-﻿  pch.cpp
-  CG_cube.cpp
-d:\vs_codework\cg\cg_cube\cg_cube\function.h(129): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-d:\vs_codework\cg\cg_cube\cg_cube\function.h(140): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-d:\vs_codework\cg\cg_cube\cg_cube\function.h(222): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+﻿  CG_cube.cpp
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(144): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(155): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(216): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\stdio.h(208): note: 参见“fopen”的声明
-d:\vs_codework\cg\cg_cube\cg_cube\function.h(281): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-d:\vs_codework\cg\cg_cube\cg_cube\function.h(282): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-d:\vs_codework\cg\cg_cube\cg_cube\function.h(283): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-d:\vs_codework\cg\cg_cube\cg_cube\function.h(521): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-d:\vs_codework\cg\cg_cube\cg_cube\function.h(664): warning C4244: “初始化”: 从“int”转换到“float”，可能丢失数据
-d:\vs_codework\cg\cg_cube\cg_cube\function.h(665): warning C4244: “初始化”: 从“int”转换到“float”，可能丢失数据
-d:\vs_codework\cg\cg_cube\cg_cube\function.h(678): warning C4244: “初始化”: 从“int”转换到“float”，可能丢失数据
-d:\vs_codework\cg\cg_cube\cg_cube\function.h(679): warning C4244: “初始化”: 从“int”转换到“float”，可能丢失数据
-d:\vs_codework\cg\cg_cube\cg_cube\function.h(703): warning C4305: “参数”: 从“double”到“GLclampf”截断
-d:\vs_codework\cg\cg_cube\cg_cube\function.h(738): warning C4244: “初始化”: 从“int”转换到“float”，可能丢失数据
-d:\vs_codework\cg\cg_cube\cg_cube\function.h(739): warning C4244: “初始化”: 从“int”转换到“float”，可能丢失数据
-d:\vs_codework\cg\cg_cube\cg_cube\function.h(755): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-d:\vs_codework\cg\cg_cube\cg_cube\function.h(756): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-d:\vs_codework\cg\cg_cube\cg_cube\function.h(760): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-d:\vs_codework\cg\cg_cube\cg_cube\function.h(761): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-d:\vs_codework\cg\cg_cube\cg_cube\function.h(807): warning C4244: “参数”: 从“double”转换到“GLfloat”，可能丢失数据
-d:\vs_codework\cg\cg_cube\cg_cube\function.h(1239): warning C4101: “depth_tmp”: 未引用的局部变量
-d:\vs_codework\cg\cg_cube\cg_cube\function.h(1278): warning C4305: “参数”: 从“double”到“GLfloat”截断
-d:\vs_codework\cg\cg_cube\cg_cube\function.h(1279): warning C4244: “参数”: 从“double”转换到“GLfloat”，可能丢失数据
-d:\vs_codework\cg\cg_cube\cg_cube\function.h(1262): warning C4101: “depth_tmp”: 未引用的局部变量
-d:\vs_codework\cg\cg_cube\cg_cube\cg_cube.cpp(42): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
-d:\vs_codework\cg\cg_cube\cg_cube\cg_cube.cpp(130): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
-d:\vs_codework\cg\cg_cube\cg_cube\cg_cube.cpp(131): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(275): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(276): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(277): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(302): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(303): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(304): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(474): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(619): warning C4244: “初始化”: 从“int”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(620): warning C4244: “初始化”: 从“int”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(636): warning C4244: “初始化”: 从“int”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(637): warning C4244: “初始化”: 从“int”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(701): warning C4244: “初始化”: 从“int”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(702): warning C4244: “初始化”: 从“int”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(716): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(719): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(731): warning C4244: “初始化”: 从“int”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(732): warning C4244: “初始化”: 从“int”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(1045): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(1046): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(1047): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(1139): warning C4244: “参数”: 从“double”转换到“GLfloat”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(1169): warning C4244: “参数”: 从“double”转换到“GLfloat”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(1190): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(1191): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(1192): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(1286): warning C4244: “参数”: 从“double”转换到“GLfloat”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(1318): warning C4244: “参数”: 从“double”转换到“GLfloat”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(1480): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(1488): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(1489): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\function.h(1492): warning C4244: “参数”: 从“double”转换到“GLfloat”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\cg_cube.cpp(45): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
 d:\vs_codework\cg\cg_cube\cg_cube\cg_cube.cpp(135): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
 d:\vs_codework\cg\cg_cube\cg_cube\cg_cube.cpp(136): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
-d:\vs_codework\cg\cg_cube\cg_cube\cg_cube.cpp(149): warning C4244: “-=”: 从“double”转换到“float”，可能丢失数据
-d:\vs_codework\cg\cg_cube\cg_cube\cg_cube.cpp(150): warning C4244: “-=”: 从“double”转换到“float”，可能丢失数据
-d:\vs_codework\cg\cg_cube\cg_cube\cg_cube.cpp(169): warning C4244: “-=”: 从“double”转换到“float”，可能丢失数据
-d:\vs_codework\cg\cg_cube\cg_cube\cg_cube.cpp(170): warning C4244: “-=”: 从“double”转换到“float”，可能丢失数据
-d:\vs_codework\cg\cg_cube\cg_cube\cg_cube.cpp(196): warning C4305: “*=”: 从“double”到“float”截断
-d:\vs_codework\cg\cg_cube\cg_cube\cg_cube.cpp(202): warning C4305: “/=”: 从“double”到“float”截断
+d:\vs_codework\cg\cg_cube\cg_cube\cg_cube.cpp(140): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\cg_cube.cpp(141): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\cg_cube.cpp(154): warning C4244: “-=”: 从“double”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\cg_cube.cpp(155): warning C4244: “-=”: 从“double”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\cg_cube.cpp(174): warning C4244: “-=”: 从“double”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\cg_cube.cpp(175): warning C4244: “-=”: 从“double”转换到“float”，可能丢失数据
+d:\vs_codework\cg\cg_cube\cg_cube\cg_cube.cpp(201): warning C4305: “*=”: 从“double”到“float”截断
+d:\vs_codework\cg\cg_cube\cg_cube\cg_cube.cpp(207): warning C4305: “/=”: 从“double”到“float”截断
   正在生成代码
-d:\vs_codework\cg\cg_cube\cg_cube\function.h(374): warning C4715: “color_texture_bmp”: 不是所有的控件路径都返回值
-  All 101 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  37 of 100 functions (37.0%) were compiled, the rest were copied from previous compilation.
+    3 functions were new in current compilation
+    7 functions had inline decision re-evaluated but remain unchanged
   已完成代码的生成
   CG_cube.vcxproj -> D:\vs_codework\cg\CG_cube\Release\CG_cube.exe

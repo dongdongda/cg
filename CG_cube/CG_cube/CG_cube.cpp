@@ -12,6 +12,9 @@ using namespace std;
 #include<GL\freeglut.h>
 
 
+//贴图分辨率尺寸
+int width = 512;
+int floor_width = 512;
 
 //鼠标旋转角度设置
 bool mouseLeftDown = false;
@@ -46,25 +49,27 @@ void display_new()
 	}
 
 
+
 	glPointSize(1.0f);
 	glBegin(GL_POINTS);
-	Triangle_display(top1, xRot, yRot, xRot_c, yRot_c, cam_pos_z, light);
-	Triangle_display(top2, xRot, yRot, xRot_c, yRot_c, cam_pos_z, light);
-	Triangle_display(bottom1, xRot, yRot, xRot_c, yRot_c, cam_pos_z, light);
-	Triangle_display(bottom2, xRot, yRot, xRot_c, yRot_c, cam_pos_z, light);
-	Triangle_display(left1, xRot, yRot, xRot_c, yRot_c, cam_pos_z, light);
-	Triangle_display(left2, xRot, yRot, xRot_c, yRot_c, cam_pos_z, light);
-	Triangle_display(right1, xRot, yRot, xRot_c, yRot_c, cam_pos_z, light);
-	Triangle_display(right2, xRot, yRot, xRot_c, yRot_c, cam_pos_z, light);
-	Triangle_display(front1, xRot, yRot, xRot_c, yRot_c, cam_pos_z, light);
-	Triangle_display(front2, xRot, yRot, xRot_c, yRot_c, cam_pos_z, light);
-	Triangle_display(back1, xRot, yRot, xRot_c, yRot_c, cam_pos_z, light);
-	Triangle_display(back2, xRot, yRot, xRot_c, yRot_c, cam_pos_z, light);
+	Triangle_display(top1, xRot, yRot, xRot_c, yRot_c, cam_pos_z, light, width);
+	Triangle_display(top2, xRot, yRot, xRot_c, yRot_c, cam_pos_z, light, width);
+	Triangle_display(bottom1, xRot, yRot, xRot_c, yRot_c, cam_pos_z, light, width);
+	Triangle_display(bottom2, xRot, yRot, xRot_c, yRot_c, cam_pos_z, light, width);
+	Triangle_display(left1, xRot, yRot, xRot_c, yRot_c, cam_pos_z, light, width);
+	Triangle_display(left2, xRot, yRot, xRot_c, yRot_c, cam_pos_z, light, width);
+	Triangle_display(right1, xRot, yRot, xRot_c, yRot_c, cam_pos_z, light, width);
+	Triangle_display(right2, xRot, yRot, xRot_c, yRot_c, cam_pos_z, light, width);
+	Triangle_display(front1, xRot, yRot, xRot_c, yRot_c, cam_pos_z, light, width);
+	Triangle_display(front2, xRot, yRot, xRot_c, yRot_c, cam_pos_z, light, width);
+	Triangle_display(back1, xRot, yRot, xRot_c, yRot_c, cam_pos_z, light, width);
+	Triangle_display(back2, xRot, yRot, xRot_c, yRot_c, cam_pos_z, light, width);
 
+	Floor_display(floor1, xRot_c, yRot_c, cam_pos_z, light, floor_width);
+	Floor_display(floor2, xRot_c, yRot_c, cam_pos_z, light, floor_width);
 
 	zbuffer_light_update(light, xRot, yRot);
-
-	shadow(xRot_c, yRot_c, cam_pos_z);
+    shadow(xRot_c, yRot_c, cam_pos_z);
 
 	glEnd();
 	glPopMatrix();
@@ -181,7 +186,7 @@ void mouseMotion(int x, int y) {
 		if (yRot_c < -360.0f)
 			yRot_c += 360.0f;
 
-		std::cout << "yRot_c:" << yRot_c << "\txRot_c" << xRot_c << std::endl;
+//		std::cout << "yRot_c:" << yRot_c << "\txRot_c" << xRot_c << std::endl;
 		glutPostRedisplay();
 	}
 }
@@ -192,7 +197,7 @@ void mouseWheel(int button, int dir, int x, int y)
 	if (dir > 0)
 	{
 		// 放大
-		if (scale < 6)
+		if (scale < 1.0)
 			scale *= 1.1;
 	}
 	else
@@ -213,7 +218,7 @@ int main(int argc, char *argv[])
 	Z_buffer_init();
 	zbuffer_light_init();
 
-	char szfilename[255] = "d:\\stones.bmp";
+	char szfilename[255] = "d:\\container.bmp";
 	if (ReadBmp(szfilename) == 0)
 	{
 		printf("failure to read file %s", szfilename);
@@ -221,8 +226,17 @@ int main(int argc, char *argv[])
 	printf("Width: %ld\n", bih.biWidth);
 	printf("Height: %ld\n", bih.biHeight);
 	printf("BitCount: %d\n\n", (int)bih.biBitCount);
-
 	texture_init();
+
+	char floor[255] = "d:\\w_floor.bmp";
+	if (ReadBmp(floor) == 0)
+	{
+		printf("failure to read file %s", szfilename);
+	}
+	printf("Width: %ld\n", bih.biWidth);
+	printf("Height: %ld\n", bih.biHeight);
+	printf("BitCount: %d\n\n", (int)bih.biBitCount);
+	texture_floor_init();
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
