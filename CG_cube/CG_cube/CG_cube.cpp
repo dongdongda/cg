@@ -19,10 +19,7 @@ int floor_width = 512;
 //鼠标旋转角度设置
 bool mouseLeftDown = false;
 bool mouseRightDown = false;
-float xdiff = 0.0f;
-float ydiff = 0.0f;
-float xdiff_c = 0.0f;
-float ydiff_c = 0.0f;
+
 
 //当鼠标按键按下时记录鼠标坐标
 float oldx;  

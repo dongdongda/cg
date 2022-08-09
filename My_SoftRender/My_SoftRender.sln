@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.329
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "My_SoftRender", "My_SoftRender\My_SoftRender.vcxproj", "{853CDBA4-F10C-46BF-850A-A8DE37588566}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup1", "Setup1\Setup1.vdproj", "{D8B3E105-1125-4BAB-90DA-CD741EF042DF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{853CDBA4-F10C-46BF-850A-A8DE37588566}.Debug|x64.ActiveCfg = Debug|x64
+		{853CDBA4-F10C-46BF-850A-A8DE37588566}.Debug|x64.Build.0 = Debug|x64
+		{853CDBA4-F10C-46BF-850A-A8DE37588566}.Debug|x86.ActiveCfg = Debug|Win32
+		{853CDBA4-F10C-46BF-850A-A8DE37588566}.Debug|x86.Build.0 = Debug|Win32
+		{853CDBA4-F10C-46BF-850A-A8DE37588566}.Release|x64.ActiveCfg = Release|x64
+		{853CDBA4-F10C-46BF-850A-A8DE37588566}.Release|x64.Build.0 = Release|x64
+		{853CDBA4-F10C-46BF-850A-A8DE37588566}.Release|x86.ActiveCfg = Release|Win32
+		{853CDBA4-F10C-46BF-850A-A8DE37588566}.Release|x86.Build.0 = Release|Win32
+		{D8B3E105-1125-4BAB-90DA-CD741EF042DF}.Debug|x64.ActiveCfg = Debug
+		{D8B3E105-1125-4BAB-90DA-CD741EF042DF}.Debug|x86.ActiveCfg = Debug
+		{D8B3E105-1125-4BAB-90DA-CD741EF042DF}.Release|x64.ActiveCfg = Release
+		{D8B3E105-1125-4BAB-90DA-CD741EF042DF}.Release|x86.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {12E5E91D-F5CE-47B0-A4A7-AE36CC939887}
+	EndGlobalSection
+EndGlobal

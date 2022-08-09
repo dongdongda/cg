@@ -5,15 +5,17 @@
 #include <iostream>
 using namespace std;
 
-#include<stdlib.h>
-#include<math.h>
-#include <algorithm>
-#include<gl/glut.h>
-#include <GL/freeglut_ext.h>
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <malloc.h>
+
+#include<math.h>
+#include <algorithm>
+
+#include<gl/glut.h>
+#include <GL/freeglut_ext.h>
+
+
 
 
 struct color_RGB;
@@ -1467,7 +1469,6 @@ void shadow(float xrot_c, float yrot_c, float cam_z)
 	
 	Camera cam = camera_rotate(xrot_c, yrot_c, Cam0, cam_z);
 	Vector3D shadow_tmp;
-
 	glPointSize(1.0f);
 	glBegin(GL_POINTS);
 	for (int i = -400; i < 400; i++)
